@@ -1,4 +1,3 @@
-
 module ScorchedBlog
   class HomeController < BaseController
     render_defaults[:dir] = File.expand_path('../views', __FILE__)
