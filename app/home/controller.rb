@@ -1,11 +1,10 @@
 
 module ScorchedBlog
   class HomeController < BaseController
-    # render_defaults[:dir] += '/home'
+    render_defaults[:dir] = File.expand_path('../views', __FILE__)
 
     get '/' do
-      'hello world'
-      # render :index
+      render :welcome
     end
 
   end
