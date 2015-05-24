@@ -20,6 +20,7 @@ module ScorchedBlog
     end
 
     def new
+      @view  = NewPage.new
       render :new
     end
 
@@ -42,7 +43,7 @@ module ScorchedBlog
       usecase = ShowPost.new(self, id)
 
       usecase.found do |post|
-        @post = post
+        @view = ShowPage.new post
         render :show
       end
 
