@@ -8,8 +8,20 @@ module ControllerTesting
   #
   # assert_ok verb '/url'
   #
+
+  # test a given response had an ok status
   def assert_ok(response=last_response)
     assert response.ok?, "Response was #{last_response.status} not OK"
+  end
+
+  # test a response returned as created
+  def assert_created(response=last_response)
+    assert_equal 201, response.status, "Response was #{last_response.status} not Created"
+  end
+
+  # test a response returned with no content
+  def assert_no_content(response=last_response)
+    assert_equal 204, response.status, "Response was #{last_response.status} not No Content"
   end
 
   # NOTE tests currently set flash before redirection
