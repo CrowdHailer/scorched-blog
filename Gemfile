@@ -22,6 +22,11 @@ gem 'scorched'
 # Ruby compilation of .scss/.sass files to browser compatible .css files
 gem 'sass'
 
+# Local Gems
+
+# Setup restful routes
+gem 'scorched-rest', :require => 'scorched/rest', :path => './gems/scorched-rest'
+
 group :test do
   gem 'rack-test', :require => 'rack/test'
   gem 'minitest', :require => 'minitest/autorun'

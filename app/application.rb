@@ -13,6 +13,7 @@ module ScorchedBlog
   class App < BaseController
 
     # Load further controllers before final root mounted controller
+    controller '/posts', PostsController
     controller '/', HomeController
 
     # If application does not find resource render helpful 404 page
