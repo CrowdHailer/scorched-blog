@@ -7,17 +7,18 @@ module ScorchedBlog
 
     def index
       # form = Archive::Search.new request.GET['search']
+      form = OpenStruct.new
       #
-      # usecase = ListPosts.new(self, form)
-      #
-      # usecase.success do |customers, search|
-      #   render :index
-      # end
-      #
-      # usecase.invalid_search do |search|
-      #   redirect index_path
-      # end
-      render :index
+      usecase = ListPosts.new(self, form)
+
+      # yield repository instance with search method
+      usecase.success do |customers, search|
+        render :index
+      end
+
+      usecase.invalid_search do |search|
+        redirect index_path
+      end
     end
 
     def new
