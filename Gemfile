@@ -22,6 +22,12 @@ gem 'scorched'
 # Ruby compilation of .scss/.sass files to browser compatible .css files
 gem 'sass'
 
+# Interaction with postgres database
+gem 'pg'
+
+# Object Relational Mapper for persistance objects
+gem 'sequel'
+
 # Local Gems
 
 # Setup restful routes
