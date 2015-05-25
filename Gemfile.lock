@@ -10,6 +10,11 @@ PATH
   specs:
     scorched-rest (0.0.2)
 
+PATH
+  remote: ./gems/typetanic
+  specs:
+    typetanic (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -69,3 +74,4 @@ DEPENDENCIES
   sequel (~> 4.19.0)
   shotgun
   thin
+  typetanic!
