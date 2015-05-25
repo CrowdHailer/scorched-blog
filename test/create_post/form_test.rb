@@ -16,5 +16,16 @@ class CreatePost
       form.email
       assert_includes form.errors[:email].message, 'valid'
     end
+
+    def test_obtains_publish_state
+      form = Form.new :published => '1'
+      assert_equal true, form.published
+    end
+
+    def test_obtains_publish_state
+      form = Form.new :published => 'maybe'
+      form.published
+      assert_includes form.errors[:published].message, 'maybe'
+    end
   end
 end
