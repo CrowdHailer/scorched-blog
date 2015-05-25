@@ -22,10 +22,10 @@ class CreatePost
       assert_equal true, form.published
     end
 
-    def test_obtains_publish_state
-      form = Form.new :published => 'maybe'
-      form.published
-      assert_includes form.errors.on(:published).first.message, 'maybe'
-    end
+    # def test_obtains_publish_state
+    #   form = Form.new :published => 'maybe'
+    #   form.published
+    #   assert_includes form.errors.on(:published).first.message, 'maybe'
+    # end
   end
 end
