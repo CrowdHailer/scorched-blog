@@ -26,7 +26,9 @@ gem 'sass'
 gem 'pg'
 
 # Object Relational Mapper for persistance objects
-gem 'sequel'
+gem 'sequel', '~> 4.19.0'
+
+gem 'errol', :git => 'git@github.com:CrowdHailer/Errol.git'
 
 # Local Gems
 
