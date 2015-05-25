@@ -8,3 +8,6 @@ Dir[File.join(
   File.basename(__FILE__, '.*'),
   '*.rb')
 ].each {|file| require file }
+# Might make sense to use this as we expect a record and an entity
+# require_relative './post/record'
+# require_relative './post/entity'
