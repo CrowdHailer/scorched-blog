@@ -6,6 +6,8 @@ Scorched Blog
 correct responses on scorched rest
 rails response symbols
 http://billpatrianakos.me/blog/2013/10/13/list-of-rails-status-code-symbols/
+list posts privatly at /posts
+publically at root
 
 Separate view concept from templates
 
