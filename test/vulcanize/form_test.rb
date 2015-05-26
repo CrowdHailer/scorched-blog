@@ -11,6 +11,11 @@ module Vulcanize
       assert_equal true, form.published
     end
 
+    def test_obtains_published_true_from_string
+      form = StandardForm.new('published' => '1')
+      assert_equal true, form.published
+    end
+
     def test_form_valid
       form = StandardForm.new(:published => '1')
       assert_equal true, form.valid?

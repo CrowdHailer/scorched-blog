@@ -5,26 +5,30 @@ module Vulcanize
     end
 
     def self.attribute(key, type, **options)
-      attributes[key] = type
+      attributes[key] = {type: type}.merge! options
     end
 
     def initialize(raw={})
       @errors = Errors.new
-      @raw = raw
+      @raw = raw.each_with_object({}) do |(k, v), h|
+        key = k.to_sym
+        value = v
+        h[key] = value
+      end
     end
 
     attr_reader :errors
 
     def published
-      self.class.attributes[:published].forge @raw[:published] do |err|
+      self.class.attributes[:published][:type].forge @raw[:published] do |err|
         errors.add :published, err
         nil
       end
     end
 
     def quantity
-      return 0 if @raw[:quantity].nil? or @raw[:quantity].empty?
-      self.class.attributes[:quantity].forge @raw[:quantity] do |err|
+      return self.class.attributes[:quantity][:default] if @raw[:quantity].nil? or @raw[:quantity].empty?
+      self.class.attributes[:quantity][:type].forge @raw[:quantity] do |err|
         errors.add :quantity, err
         nil
       end
