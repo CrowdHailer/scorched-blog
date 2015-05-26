@@ -5,6 +5,18 @@ module Vulcanize
       @attributes ||= {}
     end
 
+    def self.defaults
+      attributes.each_with_object({}) do |(k, v), h|
+        h[k] = v[:default]
+      end
+    end
+
+    def self.errors
+      attributes.each_with_object(Errors.new) do |(k, v), h|
+        h[k] = AttributeMissing.new(k) if v[:required]
+      end
+    end
+
     def self.attribute(key, type, required: false, default: nil)
       key = key.to_sym
       attributes[key] = {
@@ -17,27 +29,25 @@ module Vulcanize
         values.fetch(key)
       end
 
-      define_method "#{key}=" do |value|
-        if value.nil? or value.empty?
-          return values[key] = 0
-
+      define_method "#{key}=" do |input|
+        # Resets to default if input is blank
+        if input.nil? or input == ''
+          value = attributes[key][:default]
+          # value = default_for key
+          # required? key
+          errors.missing key if attributes[key][:required]
+          return values[key] = value
         end
-        values[key] = self.class.attributes[key][:type].forge value do |err|
+
+        # Handles error if value invalid
+        value = attributes[key][:type].forge input do |err|
           errors.add key, err
-          value
+          return values[key] = input
         end
-      end
-    end
 
-    def self.defaults
-      attributes.each_with_object({}) do |(k, v), h|
-        h[k] = v[:default]
-      end
-    end
-
-    def self.errors
-      attributes.each_with_object(Errors.new) do |(k, v), h|
-        h[k] = AttributeMissing.new(k) if v[:required]
+        # No error if value is forged
+        errors.refresh key
+        values[key] = value
       end
     end
 
@@ -51,6 +61,17 @@ module Vulcanize
 
     attr_reader :errors, :values
 
+    def attributes
+      self.class.attributes
+    end
+
+    # def default_for(key)
+    #   attribute(key)[:default]
+    # end
+
+    def attribute(key)
+      attributes[key]
+    end
 
     def valid?
       errors.empty?
@@ -58,21 +79,30 @@ module Vulcanize
   end
 
   class Errors < ::Hash
-    def self.new
-      # TODO test that you get a diff array instance each time
-      super do
-        []
-      end
+    # def missing?(attribute)
+    #   on(attribute)is_a? AttributeMissing
+    # end
+    #
+    # def invalid?(attribute)
+    #   on(attribute) && !missing?(attribute)
+    # end
+
+    def missing(attribute)
+      err = AttributeMissing.new attribute
+      add attribute, err
     end
 
     def add(attribute, error)
       attribute = attribute.to_sym
-      self[attribute] += [error]
+      self[attribute.to_sym] = error
     end
 
     def on(attribute)
       self[attribute.to_sym]
     end
+
+    def refresh(attribute)
+      delete attribute.to_sym
+    end
   end
-  # TODO doesnt need to handle arrays as forge should return only one error.
 end

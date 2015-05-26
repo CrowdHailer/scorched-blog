@@ -21,6 +21,11 @@ module Vulcanize
       assert_equal true, form.valid?
     end
 
+    def test_empty_form_valid
+      form = StandardForm.new(:published => '')
+      assert_equal true, form.valid?
+    end
+
     def test_obtains_published_false
       form = StandardForm.new(:published => '0')
       assert_equal false, form.published
@@ -38,7 +43,7 @@ module Vulcanize
 
     def test_keeps_error_for_invalid_published_input
       form = StandardForm.new(:published => 'random')
-      refute_empty form.errors.on(:published)
+      assert form.errors.on(:published)
     end
 
     class DefaultsForm < ::Vulcanize::Form
@@ -64,18 +69,29 @@ module Vulcanize
       form = DefaultsForm.new(:quantity => '1')
       assert_equal 1, form.quantity
     end
-    #
-    # class RequiredForm < ::Vulcanize::Form
-    #   attribute :quantity, Typetanic::Integer, :required => true
-    # end
-    #
-    # def test_error_for_empty_string
-    #   form = RequiredForm.new(:quantity => '')
-    #   ap RequiredForm.errors
-    #   ap DefaultsForm.errors
-    #   form.valid?
-    #   refute_empty form.errors.on(:quantity)
-    # end
+
+    class RequiredForm < ::Vulcanize::Form
+      attribute :quantity, Typetanic::Integer, :required => true
+    end
+
+    def test_error_for_missing_quantity
+      form = RequiredForm.new
+      assert_equal false, form.valid?
+      # refute_empty form.errors.on(:quantity)
+    end
+
+    def test_clears_error_for_added_quantity
+      form = RequiredForm.new
+      form.quantity = '3'
+      assert_equal true, form.valid?
+    end
+
+    def test_clears_readds_missing
+      form = RequiredForm.new
+      form.quantity = '3'
+      form.quantity = ''
+      assert_equal false, form.valid?
+    end
 
   end
 end
