@@ -61,5 +61,15 @@ module Vulcanize
       assert_equal 1, form.quantity
     end
 
+    class RequiredForm < ::Vulcanize::Form
+      attribute :quantity, Typetanic::Integer, :required => true
+    end
+
+    def test_error_for_empty_string
+      form = DefaultsForm.new(:quantity => '')
+      form.valid?
+      refute_empty form.errors.on(:quantity)
+    end
+
   end
 end
