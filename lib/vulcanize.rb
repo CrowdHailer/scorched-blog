@@ -4,11 +4,11 @@ module Vulcanize
       @attributes ||= {}
     end
 
-    def self.attribute(key, type)
+    def self.attribute(key, type, **options)
       attributes[key] = type
     end
 
-    def initialize(raw)
+    def initialize(raw={})
       @errors = Errors.new
       @raw = raw
     end
@@ -18,6 +18,14 @@ module Vulcanize
     def published
       self.class.attributes[:published].forge @raw[:published] do |err|
         errors.add :published, err
+        nil
+      end
+    end
+
+    def quantity
+      return 0 if @raw[:quantity].nil? or @raw[:quantity].empty?
+      self.class.attributes[:quantity].forge @raw[:quantity] do |err|
+        errors.add :quantity, err
         nil
       end
     end

@@ -32,10 +32,29 @@ module Vulcanize
       assert_nil form.published
     end
 
-    class DefaultForm < ::Vulcanize::Form
-      attribute :email, Typetanic::Integer
+    class DefaultsForm < ::Vulcanize::Form
+      attribute :quantity, Typetanic::Integer, :default => 0
     end
 
-    
+    def test_returns_0_for_no_value
+      form = DefaultsForm.new
+      assert_equal 0, form.quantity
+    end
+
+    def test_returns_0_for_nil
+      form = DefaultsForm.new(:quantity => nil)
+      assert_equal 0, form.quantity
+    end
+
+    def test_returns_0_for_empty_string
+      form = DefaultsForm.new(:quantity => '')
+      assert_equal 0, form.quantity
+    end
+
+    def test_returns_1
+      form = DefaultsForm.new(:quantity => '1')
+      assert_equal 1, form.quantity
+    end
+
   end
 end
