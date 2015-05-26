@@ -6,11 +6,27 @@ module Vulcanize
     end
 
     def self.attribute(key, type, required: false, default: nil)
-      attributes[key.to_sym] = {
+      key = key.to_sym
+      attributes[key] = {
         type: type,
         default: default,
         required: required
       }
+
+      define_method key do
+        values.fetch(key)
+      end
+
+      define_method "#{key}=" do |value|
+        if value.nil? or value.empty?
+          return values[key] = 0
+
+        end
+        values[key] = self.class.attributes[key][:type].forge value do |err|
+          errors.add key, err
+          value
+        end
+      end
     end
 
     def self.defaults
@@ -30,72 +46,14 @@ module Vulcanize
       @values = self.class.defaults
       @raw = raw.each do |k, v|
         public_send "#{k}=", v
-        # key = k.to_sym
-        # value = InputString.new v, self.class.attributes[key]
-        # h[key] = value
       end
     end
 
     attr_reader :errors, :values
 
-    def published=(value)
-      values[:published] = self.class.attributes[:published][:type].forge value do |err|
-        errors.add :published, err
-        value
-      end
-    end
-
-    def published
-      values[:published]
-    end
-
-    def quantity=(value)
-      if value.nil? or value.empty?
-        return values[:quantity] = 0
-
-      end
-      values[:quantity] = self.class.attributes[:quantity][:type].forge value do |err|
-        errors.add :quantity, err
-        value
-      end
-    end
-
-    def quantity
-      values[:quantity]
-    end
 
     def valid?
       errors.empty?
-    end
-  end
-
-  class InputString
-    def initialize(raw, **options)
-      # TODO clean white space
-      @raw = raw
-      @options = options
-    end
-
-    attr_reader :raw, :options
-
-    def blank?
-      raw.nil? or raw.empty?
-    end
-
-    def default
-      options.fetch(:default) {  }
-    end
-
-    def type
-      options.fetch(:type)
-    end
-
-    def required
-      options.fetch(:required) { false }
-    end
-
-    def coerce(&block)
-      type.forge raw, &block
     end
   end
 
