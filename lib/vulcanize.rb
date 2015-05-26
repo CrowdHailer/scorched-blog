@@ -1,8 +1,28 @@
 module Vulcanize
   AttributeMissing = Class.new StandardError
+  UnknownAttribute = Class.new StandardError
+
   class Form
     def self.attributes
       @attributes ||= {}
+    end
+
+    def self.requires?(attribute_name)
+      attribute_hash(attribute_name).fetch(:required)
+    end
+
+    def self.default(attribute_name)
+      attribute_hash(attribute_name).fetch(:default)
+    end
+
+    def self.type(attribute_name)
+      attribute_hash(attribute_name).fetch(:type)
+    end
+
+    def self.attribute_hash(attribute_name)
+      attributes.fetch(attribute_name) do |key|
+        raise UnknownAttribute, "No attribute with name '#{key}'"
+      end
     end
 
     def self.defaults
@@ -17,37 +37,37 @@ module Vulcanize
       end
     end
 
-    def self.attribute(key, type, required: false, default: nil)
-      key = key.to_sym
-      attributes[key] = {
+    def self.attribute(attribute_name, type, required: false, default: nil)
+      attribute_name = attribute_name.to_sym
+      attributes[attribute_name] = {
         type: type,
         default: default,
         required: required
       }
 
-      define_method key do
-        values.fetch(key)
+      define_method attribute_name do
+        values.fetch(attribute_name)
       end
 
-      define_method "#{key}=" do |input|
+      define_method "#{attribute_name}=" do |input|
         # Resets to default if input is blank
         if input.nil? or input == ''
-          value = attributes[key][:default]
-          # value = default_for key
-          # required? key
-          errors.missing key if attributes[key][:required]
-          return values[key] = value
+          value = attributes[attribute_name][:default]
+          # value = default_for attribute_name
+          # required? attribute_name
+          errors.missing attribute_name if attributes[attribute_name][:required]
+          return values[attribute_name] = value
         end
 
         # Handles error if value invalid
-        value = attributes[key][:type].forge input do |err|
-          errors.add key, err
-          return values[key] = input
+        value = attributes[attribute_name][:type].forge input do |err|
+          errors.add attribute_name, err
+          return values[attribute_name] = input
         end
 
         # No error if value is forged
-        errors.refresh key
-        values[key] = value
+        errors.refresh attribute_name
+        values[attribute_name] = value
       end
     end
 
@@ -65,12 +85,12 @@ module Vulcanize
       self.class.attributes
     end
 
-    # def default_for(key)
-    #   attribute(key)[:default]
+    # def default_for(attribute_name)
+    #   attribute(attribute_name)[:default]
     # end
 
-    def attribute(key)
-      attributes[key]
+    def attribute(attribute_name)
+      attributes[attribute_name]
     end
 
     def valid?
