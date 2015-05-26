@@ -1,54 +1,71 @@
 module Vulcanize
+  AttributeMissing = Class.new StandardError
   class Form
     def self.attributes
       @attributes ||= {}
     end
 
-    def self.attribute(key, type, **options)
-      attributes[key] = {type: type}.merge! options
+    def self.attribute(key, type, required: false, default: nil)
+      attributes[key.to_sym] = {
+        type: type,
+        default: default,
+        required: required
+      }
     end
 
-    def initialize(raw={})
-      @errors = Errors.new
-      @raw = raw.each_with_object({}) do |(k, v), h|
-        key = k.to_sym
-        value = InputString.new v, self.class.attributes[key]
-        h[key] = value
+    def self.defaults
+      attributes.each_with_object({}) do |(k, v), h|
+        h[k] = v[:default]
       end
     end
 
-    attr_reader :errors
+    def self.errors
+      attributes.each_with_object(Errors.new) do |(k, v), h|
+        h[k] = AttributeMissing.new(k) if v[:required]
+      end
+    end
+
+    def initialize(raw={})
+      @errors = self.class.errors
+      @values = self.class.defaults
+      @raw = raw.each do |k, v|
+        public_send "#{k}=", v
+        # key = k.to_sym
+        # value = InputString.new v, self.class.attributes[key]
+        # h[key] = value
+      end
+    end
+
+    attr_reader :errors, :values
+
+    def published=(value)
+      values[:published] = self.class.attributes[:published][:type].forge value do |err|
+        errors.add :published, err
+        value
+      end
+    end
 
     def published
-      # return nil unless self.class.attributes.fetch(:published, nil)
-      # self.class.attributes.fetch(:published, {})[:type].forge @raw[:published] do |err|
-      #   errors.add :published, err
-      #   nil
-      # end
-      @raw[:published].coerce do |err|
-        errors.add :published, err
-        nil
+      values[:published]
+    end
+
+    def quantity=(value)
+      if value.nil? or value.empty?
+        return values[:quantity] = 0
+
+      end
+      values[:quantity] = self.class.attributes[:quantity][:type].forge value do |err|
+        errors.add :quantity, err
+        value
       end
     end
 
     def quantity
-      raw_input = @raw.fetch(:quantity, InputString.new(nil, self.class.attributes[__method__]))
-      ap raw_input
-      return raw_input.default if raw_input.blank?
-      raw_input.coerce do |err|
-        errors.add :quantity, err
-        nil
-      end
-      # return @raw[:quantity].default if @raw[:quantity].blank?
-      # self.class.attributes[:quantity][:type].forge @raw[:quantity] do |err|
-      #   errors.add :quantity, err
-      #   nil
-      # end
+      values[:quantity]
     end
 
     def valid?
-      published
-      # quantity
+      errors.empty?
     end
   end
 
