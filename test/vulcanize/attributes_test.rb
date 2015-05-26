@@ -88,5 +88,25 @@ module Vulcanize
       klass = Class.new Form
       assert_raises(Vulcanize::UnknownAttribute) { klass.type :email }
     end
+
+    # Instance meathods
+    def test_requires_attribute_is_true_on_instance
+      klass = Class.new Form
+      klass.attribute :email, :TYPE, required: true
+      assert_equal true, klass.new.requires?(:email)
+    end
+
+    def test_makes_available_default_to_instance
+      klass = Class.new Form
+      klass.attribute :email, :TYPE, default: :symbol
+      assert_equal :symbol, klass.new.default(:email)
+    end
+
+    def test_makes_available_type_to_instance
+      klass = Class.new Form
+      klass.attribute :email, :TYPE
+      assert_equal :TYPE, klass.new.type(:email)
+    end
+
   end
 end

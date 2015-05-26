@@ -1,8 +1,11 @@
+require 'forwardable'
+
 module Vulcanize
   AttributeMissing = Class.new StandardError
   UnknownAttribute = Class.new StandardError
 
   class Form
+    extend Forwardable
     def self.attributes
       @attributes ||= {}
     end
@@ -50,23 +53,21 @@ module Vulcanize
       end
 
       define_method "#{attribute_name}=" do |input|
+        errors.refresh attribute_name
+
         # Resets to default if input is blank
         if input.nil? or input == ''
-          value = attributes[attribute_name][:default]
-          # value = default_for attribute_name
-          # required? attribute_name
-          errors.missing attribute_name if attributes[attribute_name][:required]
+          value = default attribute_name
+          errors.missing attribute_name if requires? attribute_name
           return values[attribute_name] = value
         end
 
         # Handles error if value invalid
-        value = attributes[attribute_name][:type].forge input do |err|
+        value = type(attribute_name).forge input do |err|
           errors.add attribute_name, err
-          return values[attribute_name] = input
+          input
         end
 
-        # No error if value is forged
-        errors.refresh attribute_name
         values[attribute_name] = value
       end
     end
@@ -80,17 +81,10 @@ module Vulcanize
     end
 
     attr_reader :errors, :values
+    def_delegators :'self.class', :requires?, :default, :type
 
     def attributes
       self.class.attributes
-    end
-
-    # def default_for(attribute_name)
-    #   attribute(attribute_name)[:default]
-    # end
-
-    def attribute(attribute_name)
-      attributes[attribute_name]
     end
 
     def valid?
