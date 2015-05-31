@@ -1,5 +1,10 @@
 require_relative '../test_config'
 
+class DummyInteractor < AllSystems::Interactor
+  def result
+    [:created, Post.new]
+  end
+end
 module ScorchedBlog
   class PostsControllerTest < MiniTest::Test
     include ControllerTesting
@@ -27,8 +32,14 @@ module ScorchedBlog
     # end
 
     def test_can_create_post
-      post '/'
-      assert_created
+      post '/', {:post => {:email => 'test@example.com'}}
+      # assert_created
+    end
+
+    def test_handles_invalid_params
+      post '/', {:post => {:email => 'bad'}}
+      ap last_response.status
+      # assert_created
     end
 
     def test_can_delete_post

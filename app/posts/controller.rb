@@ -27,19 +27,19 @@ module ScorchedBlog
     end
 
     def create
-      # params = Post::Create::Form.new request.POST['post']
-      #
-      # usecase = Post::Create.new(self, form)
-      #
-      # usecase.created do |post|
-      #   redirect show_path(post), 201
-      # end
-      #
-      # usecase.invalid_params do |form|
-      #   @create_form = form
-      #   render :new
-      # end
-      redirect '1', 201
+      form =  CreatePost::Form.new request.POST['post']
+      usecase = CreatePost.new(self, form)
+
+      usecase.created do |post|
+        redirect "/posts/#{post.id}", 302
+      end
+
+      usecase.invalid_params do |form|
+        @create_form = form
+        response.status = 400
+        render :new
+      end
+
     end
 
     def show(id)

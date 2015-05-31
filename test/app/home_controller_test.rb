@@ -32,8 +32,8 @@ module ScorchedBlog
     def test_home_page_is_available_rack_test
       response = get '/'
       html = Nokogiri::HTML(response.body) { |config| config.strict }
-      ap html.css('head > title').text
-      ap html.css('body h1')
+      # ap html.css('head > title').text
+      # ap html.css('body h1')
     end
 
   end
