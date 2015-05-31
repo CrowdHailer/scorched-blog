@@ -11,10 +11,19 @@ class CreatePost
       assert_equal example_email, form.email
     end
 
+    def test_is_valid_with_email
+      form = Form.new :email => 'test@example.com'
+      assert_equal true, form.valid?
+    end
+
     def test_handles_invalid_email
       form = Form.new :email => 'bad'
-      form.email
       assert_includes form.errors.on(:email).message, 'is not a valid email'
+    end
+
+    def test_requires_email
+      form = Form.new :email => ''
+      assert_equal true, form.errors.missing?(:email)
     end
 
     def test_obtains_publish_state

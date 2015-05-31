@@ -93,9 +93,9 @@ module Vulcanize
   end
 
   class Errors < ::Hash
-    # def missing?(attribute)
-    #   on(attribute)is_a? AttributeMissing
-    # end
+    def missing?(attribute)
+      on(attribute).is_a? AttributeMissing
+    end
     #
     # def invalid?(attribute)
     #   on(attribute) && !missing?(attribute)
