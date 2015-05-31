@@ -90,6 +90,8 @@ module Vulcanize
     def valid?
       errors.empty?
     end
+    # allow valid and invalid to take arguments
+    # Delegate missing and invalid up to form object to follow law of demitir
   end
 
   class Errors < ::Hash
