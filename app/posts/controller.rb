@@ -1,9 +1,11 @@
+require_relative './views/new_page'
+
 module ScorchedBlog
   class PostsController < BaseController
     # Include restful controller routes
     include Scorched::Rest
 
-    render_defaults[:dir] = File.expand_path('../views', __FILE__)
+    render_defaults[:dir] = File.expand_path('../templates', __FILE__)
 
     def index
       # form = Archive::Search.new request.GET['search']
@@ -22,11 +24,13 @@ module ScorchedBlog
     end
 
     def new
-      @view  = NewPage.new
+      @view  = NewPage.new OpenStruct.new
+      ap render_defaults
       render :new
     end
 
     def create
+      ap request.POST['post']
       form =  CreatePost::Form.new request.POST['post']
       usecase = CreatePost.new(self, form)
 
@@ -43,16 +47,17 @@ module ScorchedBlog
     end
 
     def show(id)
-      usecase = ShowPost.new(self, id)
-
-      usecase.found do |post|
-        @view = ShowPage.new post
-        render :show
-      end
-
-      usecase.not_found do |id|
-        redirect index_path, 404
-      end
+      # usecase = ShowPost.new(self, id)
+      #
+      # usecase.found do |post|
+      #   @view = ShowPage.new post
+      #   render :show
+      # end
+      #
+      # usecase.not_found do |id|
+      #   redirect index_path, 404
+      # end
+      'hello'
     end
 
     def update(id)
