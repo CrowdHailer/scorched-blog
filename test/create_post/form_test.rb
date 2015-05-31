@@ -14,7 +14,7 @@ class CreatePost
     def test_handles_invalid_email
       form = Form.new :email => 'bad'
       form.email
-      assert_includes form.errors.on(:email).first.message, 'valid'
+      assert_includes form.errors.on(:email).message, 'is not a valid email'
     end
 
     def test_obtains_publish_state
@@ -22,10 +22,10 @@ class CreatePost
       assert_equal true, form.published
     end
 
-    # def test_obtains_publish_state
-    #   form = Form.new :published => 'maybe'
-    #   form.published
-    #   assert_includes form.errors.on(:published).first.message, 'maybe'
-    # end
+    def test_handles_invalid_published_state
+      form = Form.new :published => 'maybe'
+      form.published
+      assert_includes form.errors.on(:published).message, 'maybe'
+    end
   end
 end
