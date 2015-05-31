@@ -26,7 +26,7 @@ module ScorchedBlog
     end
 
     def new
-      @view  = NewPage.new OpenStruct.new
+      @view  = NewPage.new nil
       render :new
     end
 

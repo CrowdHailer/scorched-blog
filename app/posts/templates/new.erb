@@ -1,9 +1,15 @@
 <form class="pure-form pure-form-aligned" action="/posts" method="post">
     <fieldset>
-        <!-- <div class="pure-control-group">
+        <div class="pure-control-group">
             <label for="post_title">Title</label>
             <input id="post_title" name="post[title]" type="text" placeholder="Post title">
-        </div> -->
+        </div>
+
+        <div class="pure-control-group">
+            <label for="post_body">Body</label>
+            <textarea id="post_body" name="post[body]" type="text" placeholder="Post body">
+            </textarea>
+        </div>
 
         <hr>
 
@@ -14,8 +20,8 @@
         </div>
 
         <div class="pure-controls">
-            <label for="cb" class="pure-checkbox">
-                <input id="cb" type="checkbox"> I've read the terms and conditions
+            <label for="published" class="pure-checkbox">
+                <input id="published" name="post[published]" type="checkbox">Publish this post
             </label>
 
             <button type="submit" class="pure-button pure-button-primary">Submit</button>

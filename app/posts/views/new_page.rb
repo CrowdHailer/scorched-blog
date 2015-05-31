@@ -10,11 +10,11 @@ class NewPage
   end
 
   def email_value
-    form.email
+    form.email if form
   end
 
   def email_error
-    form.errors.on(:email)
+    form.errors.on(:email) if form
   end
 
 end
