@@ -21,7 +21,11 @@ class CreatePost < AllSystems::Interactor
     if form.valid?
       record = Post::Record.new :email => form.email
       report_created Post.new(record)
+      # post = Posts.create form
+      # send emails
+      # report_created post
     else
+      # report error if wanted
       report_invalid_params form
     end
   end
