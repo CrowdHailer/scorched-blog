@@ -30,7 +30,6 @@ end
 
 post has
 title
-head description 70 charachters
 date
 body markdown
 email
