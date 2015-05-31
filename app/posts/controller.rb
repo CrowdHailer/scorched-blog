@@ -1,4 +1,5 @@
 require_relative './views/new_page'
+require_relative './views/index_page'
 
 module ScorchedBlog
   class PostsController < BaseController
@@ -15,6 +16,7 @@ module ScorchedBlog
 
       # yield repository instance with search method
       usecase.success do |customers, search|
+        @view = IndexPage.new
         render :index
       end
 
