@@ -13,6 +13,19 @@ module ScorchedBlog
       assert_ok
     end
 
+    # def test_show_page_has_posts_title
+    #   # uses oStruct record
+    #   post = Post.new()
+    #   # In tests monkey patch in posts
+    #   # post = Post.published
+    #   FindPost.stub :result, [:success, post] do
+    #     visit('/')
+    #   end
+    #   within('.header') do
+    #     has_content post.email
+    #   end
+    # end
+
     def test_can_create_post
       post '/'
       assert_created
