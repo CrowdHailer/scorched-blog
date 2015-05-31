@@ -27,10 +27,3 @@ class usecase
   end
 end
 ```
-
-post has
-title
-date
-body markdown
-email
-published
