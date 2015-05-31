@@ -12,13 +12,17 @@ class CreatePost < AllSystems::Interactor
   end
 
   def outcomes
-    [:created]
+    [:created, :invalid_params]
   end
 
   attr_reader :context, :form
 
   def go!
-    record = Post::Record.new :email => form.email
-    report_created Post.new(record)
+    if form.valid?
+      record = Post::Record.new :email => form.email
+      report_created Post.new(record)
+    else
+      report_invalid_params form
+    end
   end
 end
