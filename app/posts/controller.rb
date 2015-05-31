@@ -27,7 +27,6 @@ module ScorchedBlog
 
     def new
       @view  = NewPage.new OpenStruct.new
-      ap render_defaults
       render :new
     end
 
@@ -41,8 +40,8 @@ module ScorchedBlog
       end
 
       usecase.invalid_params do |form|
-        @create_form = form
         response.status = 400
+        @view = NewPage.new form
         render :new
       end
 

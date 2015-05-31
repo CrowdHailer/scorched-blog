@@ -9,7 +9,8 @@
 
         <div class="pure-control-group">
             <label for="post_email">Email Address</label>
-            <input id="post_email" name="post[email]" type="email" placeholder="Email Address">
+            <input id="post_email" name="post[email]" type="text" placeholder="Email Address" value="<%= @view.email_value %>">
+            <small class="error"><%= @view.email_error %></small>
         </div>
 
         <div class="pure-controls">
