@@ -5,6 +5,7 @@ module Vulcanize
   UnknownAttribute = Class.new StandardError
 
   class Form
+    # TODO delegate each to hash
     extend Forwardable
     def self.attributes
       @attributes ||= {}

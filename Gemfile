@@ -30,6 +30,8 @@ gem 'sequel', '~> 4.19.0'
 
 gem 'errol', :git => 'git@github.com:CrowdHailer/Errol.git'
 
+gem 'all_systems', :git => 'git@github.com:CrowdHailer/AllSystems.git'
+
 # Local Gems
 
 # Setup restful routes

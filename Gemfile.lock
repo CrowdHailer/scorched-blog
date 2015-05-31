@@ -1,4 +1,10 @@
 GIT
+  remote: git@github.com:CrowdHailer/AllSystems.git
+  revision: 08dde324eb83d4b429b38062467a81d243886312
+  specs:
+    all_systems (0.2.1)
+
+GIT
   remote: git@github.com:CrowdHailer/Errol.git
   revision: 19d8d37d66b1dea03f8097d1c2e592c5112fcf70
   specs:
@@ -73,6 +79,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  all_systems!
   awesome_print
   capybara
   dotenv
