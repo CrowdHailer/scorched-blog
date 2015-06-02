@@ -24,7 +24,6 @@ class Posts < Errol::Repository
   end
 
   def dataset
-    ap inquiry.admin
     raw_dataset.order :title
   end
 end

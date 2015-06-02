@@ -7,6 +7,10 @@ class IndexPage
     def title
       @post.title
     end
+
+    def id
+      @post.id
+    end
   end
 
   def initialize(posts)

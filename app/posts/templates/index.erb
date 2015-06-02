@@ -2,5 +2,8 @@
     posts page <%= @view.page_number %>
 </h1>
 <% @view.each_post do |post| %>
-    <%= post.title %>
+    <a href="/posts/<%= post.id %>">
+        <%= post.title %>
+    </a>
+    <br>
 <% end %>
