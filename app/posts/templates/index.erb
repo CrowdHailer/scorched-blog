@@ -1,3 +1,6 @@
 <h1>
-    posts
+    posts page <%= @view.page_number %>
 </h1>
+<% @view.each_post do |post| %>
+    <%= post.title %>
+<% end %>

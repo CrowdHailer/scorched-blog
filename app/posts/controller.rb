@@ -17,13 +17,14 @@ module ScorchedBlog
       #
       # # yield repository instance with search method
       # usecase.success do |customers, search|
-      #   @view = IndexPage.new
       #   render :index
       # end
       #
       # usecase.invalid_search do |search|
       #   redirect index_path
       # end
+      @view = IndexPage.new Posts.new
+      render :index
     end
 
     def new
