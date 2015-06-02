@@ -60,23 +60,23 @@ module ScorchedBlog
       end
     end
 
-    def update(id)
-      form = Post::Update::Form.new request.POST['post']
-
-      usecase = Post::Update.new(self, id, form)
-
-      usecase.success do |post|
-
-      end
-
-      usecase.not_found do |id|
-
-      end
-
-      usecase.invalid_params do |post, form|
-
-      end
-    end
+    # def update(id)
+    #   form = Post::Update::Form.new request.POST['post']
+    #
+    #   usecase = Post::Update.new(self, id, form)
+    #
+    #   usecase.success do |post|
+    #
+    #   end
+    #
+    #   usecase.not_found do |id|
+    #
+    #   end
+    #
+    #   usecase.invalid_params do |post, form|
+    #
+    #   end
+    # end
 
     def destroy(id)
       usecase = DestroyPost.new(self, id)
