@@ -2,17 +2,10 @@ require_relative '../test_config'
 
 class CreatePost
   class FormTest < MiniTest::Test
-    def example_email
-      @email ||= Typetanic::Email.new 'test@example.com'
-    end
-
-    # def title_input
-    #   'A nice Title'
-    # end
-
     def test_obtains_email
+      email = Typetanic::Email.new 'test@example.com'
       form = Form.new :email => 'test@example.com'
-      assert_equal example_email, form.email
+      assert_equal email, form.email
     end
 
     def test_is_valid_with_email
@@ -22,12 +15,12 @@ class CreatePost
 
     def test_handles_invalid_email
       form = Form.new :email => 'bad'
-      assert_includes form.errors.on(:email).message, 'is not a valid email'
+      assert_equal true, form.invalid?(:email)
     end
 
     def test_requires_email
       form = Form.new :email => ''
-      assert_equal true, form.errors.missing?(:email)
+      assert_equal true, form.missing?(:email)
     end
 
     def test_obtains_title

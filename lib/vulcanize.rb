@@ -83,6 +83,9 @@ module Vulcanize
 
     attr_reader :errors, :values
     def_delegators :'self.class', :requires?, :default, :type
+    # TODO test
+    # might not want to be invalid here as missing is invalid
+    def_delegators :errors, :missing?, :invalid?
 
     def attributes
       self.class.attributes
@@ -102,10 +105,10 @@ module Vulcanize
     def missing?(attribute)
       on(attribute).is_a? AttributeMissing
     end
-    #
-    # def invalid?(attribute)
-    #   on(attribute) && !missing?(attribute)
-    # end
+
+    def invalid?(attribute)
+      on(attribute) && !missing?(attribute)
+    end
 
     def missing(attribute)
       err = AttributeMissing.new 'is not present'
