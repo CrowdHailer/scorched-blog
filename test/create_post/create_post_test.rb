@@ -16,7 +16,7 @@ class CreatePostTest < MiniTest::Test
 
     assert_equal :created, interactor.outcome
     post, = interactor.output
-    assert_equal email, post.record.email
+    assert_equal Typetanic::Email.new(email), post.record.email
   end
 
   def test_return_invalid_form

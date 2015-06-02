@@ -27,6 +27,7 @@ end
 module ScorchedBlog
   class PostsControllerTest < MiniTest::Test
     include ControllerTesting
+    include DatabaseTesting
 
     def app
       PostsController

@@ -93,6 +93,9 @@ module Vulcanize
     end
     # allow valid and invalid to take arguments
     # Delegate missing and invalid up to form object to follow law of demitir
+    def each(&block)
+      values.each &block
+    end
   end
 
   class Errors < ::Hash
