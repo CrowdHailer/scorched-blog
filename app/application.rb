@@ -11,13 +11,13 @@ module ScorchedBlog
     controller '/', HomeController
 
     after :status => 404 do
-      response.body = render :'errors/404'
+      response.body = render :'404', :layout => :error
     end
 
     error do
       if RACK_ENV == 'production'
         response.status = 500
-        response.body = render :'errors/500'
+        response.body = render :'500'
       end
     end
   end
