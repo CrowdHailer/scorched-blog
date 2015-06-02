@@ -7,7 +7,7 @@ Sequel.migration do
       String :body
       Date :published_date
       TrueClass :published, :default => false
-
+      # publication_date
     end
   end
 

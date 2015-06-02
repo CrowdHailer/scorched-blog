@@ -1,5 +1,6 @@
 require_relative './views/new_page'
 require_relative './views/index_page'
+require_relative './views/show_page'
 
 module ScorchedBlog
   class PostsController < BaseController
@@ -47,16 +48,16 @@ module ScorchedBlog
     end
 
     def show(id)
-      # usecase = ShowPost.new(self, id)
-      #
-      # usecase.found do |post|
-      #   @view = ShowPage.new post
-      #   render :show
-      # end
-      #
-      # usecase.not_found do |id|
-      #   redirect index_path, 404
-      # end
+      usecase = ShowPost.new(self, id)
+
+      usecase.found do |post|
+        @view = ShowPage.new post
+        return render :show
+      end
+
+      usecase.not_found do |id|
+        redirect index_path, 404
+      end
     end
 
     def update(id)
