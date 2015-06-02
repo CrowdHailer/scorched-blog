@@ -29,6 +29,10 @@ class TitleTest < MiniTest::Test
     assert_equal title_string, title.to_str
   end
 
+  def test_dumps_as_a_string
+    assert_equal title_string, title.dump
+  end
+
   def test_raises_error_if_too_long
     assert_raises Title::TooLongError do
       Title.new 'x' * 71

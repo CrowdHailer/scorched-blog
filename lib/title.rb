@@ -2,6 +2,14 @@ class Title
   TooLongError = Class.new(Typetanic::Invalid)
   TooShortError = Class.new(Typetanic::Invalid)
   InvalidCharactersError = Class.new(Typetanic::Invalid)
+  
+  extend Typetanic::Forge
+  extend Typetanic::Stash
+
+  def self.load(string)
+    new(string)
+  end
+
   def initialize(value)
     self.value = value
   end
@@ -18,6 +26,7 @@ class Title
     value
   end
   alias_method :to_str, :to_s
+  alias_method :dump, :to_s
 
   private
 
