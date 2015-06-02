@@ -1,6 +1,6 @@
 require File.expand_path("../../config/boot.rb", __FILE__)
 
-require File.expand_path('../_base_controller.rb', __FILE__)
+require File.expand_path('../base/controller.rb', __FILE__)
 Dir[File.expand_path('../*/controller.rb', __FILE__)].each { |file| require file}
 
 module ScorchedBlog
