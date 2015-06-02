@@ -28,4 +28,22 @@ class TitleTest < MiniTest::Test
   def test_shows_as_a_strict_string
     assert_equal title_string, title.to_str
   end
+
+  def test_raises_error_if_too_long
+    assert_raises Title::TooLongError do
+      Title.new 'x' * 71
+    end
+  end
+
+  def test_raises_error_if_too_short
+    assert_raises Title::TooShortError do
+      Title.new 'xx'
+    end
+  end
+
+  def test_raises_error_if_contains_forbidden_charachters
+    assert_raises Title::InvalidCharactersError do
+      Title.new 'Hello <>/'
+    end
+  end
 end

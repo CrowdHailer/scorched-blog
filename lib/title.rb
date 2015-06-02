@@ -1,4 +1,7 @@
 class Title
+  TooLongError = Class.new(Typetanic::Invalid)
+  TooShortError = Class.new(Typetanic::Invalid)
+  InvalidCharactersError = Class.new(Typetanic::Invalid)
   def initialize(value)
     self.value = value
   end
@@ -19,7 +22,11 @@ class Title
   private
 
   def value=(value)
-    @value = value.strip.capitalize
+    formated = value.strip.capitalize
+    raise TooLongError, 'is too long' unless formated.length <= 70
+    raise TooShortError, 'is too short' unless formated.length >= 3
+    raise InvalidCharactersError, 'contains invalid charachters' unless formated[/^[a-z0-9\s]+$/i]
+    @value = formated
   end
 
 end
