@@ -28,6 +28,8 @@ class usecase
 end
 ```
 
+order by title or by published date
+
 ## Form requirements
 
 - Form object should have a :default => option
