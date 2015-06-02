@@ -79,7 +79,10 @@ module ScorchedBlog
     end
 
     def destroy(id)
-      response.status = 204
+      usecase = DestroyPost.new(self, id)
+      usecase.success do
+        redirect index_path, 302
+      end
     end
 
   end
