@@ -4,9 +4,7 @@ require_relative './views/show_page'
 
 module ScorchedBlog
   class PostsController < BaseController
-    # Include restful controller routes
     include Scorched::Rest
-
     render_defaults[:dir] = File.expand_path('../templates', __FILE__)
 
     def index
@@ -34,13 +32,13 @@ module ScorchedBlog
 
     def create
       form =  CreatePost::Form.new request.POST['post']
-      usecase = CreatePost.new(self, form)
+      interactor = CreatePost.new(self, form)
 
-      usecase.created do |post|
+      interactor.created do |post|
         redirect "/posts/#{post.id}", 302
       end
 
-      usecase.invalid_params do |form|
+      interactor.invalid_params do |form|
         response.status = 400
         @view = NewPage.new form
         render :new
@@ -49,39 +47,22 @@ module ScorchedBlog
     end
 
     def show(id)
-      usecase = ShowPost.new(self, id)
+      interactor = ShowPost.new(self, id)
 
-      usecase.found do |post|
+      interactor.found do |post|
         @view = ShowPage.new post
         return render :show
       end
 
-      usecase.not_found do |id|
+      interactor.not_found do |id|
         redirect index_path, 404
       end
     end
 
-    # def update(id)
-    #   form = Post::Update::Form.new request.POST['post']
-    #
-    #   usecase = Post::Update.new(self, id, form)
-    #
-    #   usecase.success do |post|
-    #
-    #   end
-    #
-    #   usecase.not_found do |id|
-    #
-    #   end
-    #
-    #   usecase.invalid_params do |post, form|
-    #
-    #   end
-    # end
-
     def destroy(id)
-      usecase = DestroyPost.new(self, id)
-      usecase.success do
+      interactor = DestroyPost.new(self, id)
+
+      interactor.success do
         redirect '/posts', 302
       end
     end

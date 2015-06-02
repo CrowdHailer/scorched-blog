@@ -41,6 +41,27 @@ It is possible to remove the application and tests and still have a working syst
 $ rm -rf app/ test/app
 ```
 
+#### Example update action in the posts controller
+```rb
+def update(id)
+  form = UpdatePost::Form.new request.POST['post']
+
+  interactor = UpdatePost.new self, id, form
+
+  interactor.success do |post|
+
+  end
+
+  interactor.not_found do |id|
+
+  end
+
+  interactor.invalid_params do |post, form|
+
+  end
+end
+```
+
 ## Form requirements
 
 - Form object should have a :default => option
