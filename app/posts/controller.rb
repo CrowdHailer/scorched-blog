@@ -57,7 +57,6 @@ module ScorchedBlog
       # usecase.not_found do |id|
       #   redirect index_path, 404
       # end
-      'hello'
     end
 
     def update(id)
