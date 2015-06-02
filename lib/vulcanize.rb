@@ -105,7 +105,7 @@ module Vulcanize
     # end
 
     def missing(attribute)
-      err = AttributeMissing.new attribute
+      err = AttributeMissing.new 'is not present'
       add attribute, err
     end
 
