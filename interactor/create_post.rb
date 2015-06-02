@@ -1,11 +1,18 @@
-FormBoolean = Typetanic::Boolean :affirmative => ['1'], :negative => ['0']
+# FormBoolean = Typetanic::Boolean :affirmative => ['1'], :negative => ['0']
+class FormBoolean
+  extend Typetanic::Forge
+  def self.new(value)
+    value == 'on'
+  end
+  # TODO still might make sense to handle invalid values here
+end
 
 class CreatePost < AllSystems::Interactor
   class Form < Vulcanize::Form
     attribute :email, Typetanic::Email, :required => true
     attribute :published, FormBoolean
     attribute :title, Title
-    attribute :body, Body
+    attribute :body, Body, :default => false
   end
 
   def initialize(context, form)

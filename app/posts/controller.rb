@@ -31,7 +31,6 @@ module ScorchedBlog
     end
 
     def create
-      ap request.POST['post']
       form =  CreatePost::Form.new request.POST['post']
       usecase = CreatePost.new(self, form)
 

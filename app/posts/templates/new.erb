@@ -2,13 +2,14 @@
     <fieldset>
         <div class="pure-control-group">
             <label for="post_title">Title</label>
-            <input id="post_title" name="post[title]" type="text" placeholder="Post title">
+            <input id="post_title" name="post[title]" type="text" placeholder="Post title" value="<%= @view.title_value %>">
+            <small class="error"><%= @view.title_error %></small>
         </div>
 
         <div class="pure-control-group">
             <label for="post_body">Body</label>
-            <textarea id="post_body" name="post[body]" type="text" placeholder="Post body">
-            </textarea>
+            <textarea id="post_body" name="post[body]" type="text" placeholder="Post body"><%= @view.body_value %></textarea>
+            <small class="error"><%= @view.body_error %></small>
         </div>
 
         <hr>
@@ -21,9 +22,9 @@
 
         <div class="pure-controls">
             <label for="published" class="pure-checkbox">
-                <input id="published" name="post[published]" type="checkbox">Publish this post
+                <input id="published" name="post[published]" type="checkbox" <%= 'checked' if @view.published? %>>Publish this post
             </label>
-
+            <br>
             <button type="submit" class="pure-button pure-button-primary">Submit</button>
         </div>
     </fieldset>
