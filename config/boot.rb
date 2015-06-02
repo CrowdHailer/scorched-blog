@@ -22,4 +22,4 @@ Dir[File.dirname(__FILE__) + '/*.rb'].each {|file| require file }
 Dir[File.expand_path('../../lib/*.rb', __FILE__)].each {|file| require file }
 
 # # require the usecase directory
-Dir[File.expand_path('../../usecase/*.rb', __FILE__)].each {|file| require file }
+Dir[File.expand_path('../../interactor/*.rb', __FILE__)].each {|file| require file }

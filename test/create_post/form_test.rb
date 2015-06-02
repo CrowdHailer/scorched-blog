@@ -6,6 +6,10 @@ class CreatePost
       @email ||= Typetanic::Email.new 'test@example.com'
     end
 
+    # def title_input
+    #   'A nice Title'
+    # end
+
     def test_obtains_email
       form = Form.new :email => 'test@example.com'
       assert_equal example_email, form.email
@@ -24,6 +28,24 @@ class CreatePost
     def test_requires_email
       form = Form.new :email => ''
       assert_equal true, form.errors.missing?(:email)
+    end
+
+    def test_obtains_title
+      title_input = 'A nice title'
+      form = Form.new :title => title_input
+      assert_equal Title.new(title_input), form.title
+    end
+
+    def test_handles_invalid_title
+      title_input = 'A <dangerous> title'
+      form = Form.new :title => title_input
+      assert_equal 'contains invalid charachters', form.errors.on(:title).message
+    end
+
+    def test_obtains_body
+      body_input = 'Some informative content'
+      form = Form.new :body => body_input
+      assert_equal body_input, form.body.raw
     end
 
     def test_obtains_publish_state

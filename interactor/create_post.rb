@@ -4,6 +4,8 @@ class CreatePost < AllSystems::Interactor
   class Form < Vulcanize::Form
     attribute :email, Typetanic::Email, :required => true
     attribute :published, FormBoolean
+    attribute :title, Title
+    attribute :body, Body
   end
 
   def initialize(context, form)
