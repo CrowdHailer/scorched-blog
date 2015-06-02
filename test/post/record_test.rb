@@ -25,18 +25,21 @@ module Post
     end
 
     def test_it_can_have_email
-      record = Record.new :email => 'test@example.com'
-      assert_equal 'test@example.com', record.email
+      email = Typetanic::Email.new 'test@example.com'
+      record = Record.new :email => email
+      assert_equal email, record.email
     end
 
     def test_it_can_have_title
-      record = Record.new :title => 'The Post'
-      assert_equal 'The Post', record.title
+      title = Title.new 'The Post'
+      record = Record.new :title => title
+      assert_equal title, record.title
     end
 
     def test_it_can_have_body
-      record = Record.new :body => 'lots of lovel text in the post'
-      assert_equal 'lots of lovel text in the post', record.body
+      body = Body.new 'lots of lovel text in the post'
+      record = Record.new :body => body
+      assert_equal body, record.body
     end
 
     def test_it_can_have_published_date
