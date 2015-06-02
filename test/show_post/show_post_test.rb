@@ -7,7 +7,8 @@ class ShowPostTest < MiniTest::Test
   end
 
   def test_will_show_post
-    creation = CreatePost.new context, CreatePost::Form.new(:email => 'test@example.com')
+    form = CreatePost::Form.new :email => 'test@example.com'
+    creation = CreatePost.new context, form
     post = creation.output.first
     interactor = ShowPost.new context, post.id
     assert_equal :found, interactor.outcome
