@@ -1,7 +1,6 @@
 class Posts < Errol::Repository
   class Inquiry < Errol::Inquiry
-    default :order, :id
-    # default :published
+    default :admin, false
     default :page, 1
     default :page_size, 15
   end
@@ -12,11 +11,11 @@ class Posts < Errol::Repository
     end
 
     def inquiry(requirements)
-      Inquiry.new(requirements)
+      Inquiry.new requirements
     end
 
     def dispatch(record)
-      Post.new(record)
+      Post.new record
     end
 
     def receive(entity)
@@ -25,6 +24,7 @@ class Posts < Errol::Repository
   end
 
   def dataset
-    raw_dataset
+    ap inquiry.admin
+    raw_dataset.order :title
   end
 end

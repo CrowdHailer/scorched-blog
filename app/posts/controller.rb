@@ -81,7 +81,7 @@ module ScorchedBlog
     def destroy(id)
       usecase = DestroyPost.new(self, id)
       usecase.success do
-        redirect index_path, 302
+        redirect '/posts', 302
       end
     end
 
