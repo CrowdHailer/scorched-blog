@@ -30,6 +30,17 @@ end
 
 order by title or by published date
 
+## Notes
+#### Delivery separation
+The interactors act as a hard boundary between the domain logic and the delivery mechanism. The load sequence requires the application which boots the Model. It is possible to load the domain without loading the delivery mechanism.
+```
+$ irb -r ./config/boot
+```
+It is possible to remove the application and tests and still have a working system.
+```
+$ rm -rf app/ test/app
+```
+
 ## Form requirements
 
 - Form object should have a :default => option
