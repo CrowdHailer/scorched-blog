@@ -21,7 +21,8 @@ module ScorchedBlog
       # usecase.invalid_search do |search|
       #   redirect index_path
       # end
-      @view = IndexPage.new Posts.new
+      posts = Posts.new request.GET
+      @view = IndexPage.new posts
       render :index
     end
 
