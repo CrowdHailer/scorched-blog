@@ -32,6 +32,9 @@ gem 'errol', :git => 'git@github.com:CrowdHailer/Errol.git'
 
 gem 'all_systems', :git => 'git@github.com:CrowdHailer/AllSystems.git'
 
+# Render markdown
+gem 'redcarpet'
+
 # Local Gems
 
 # Setup restful routes
