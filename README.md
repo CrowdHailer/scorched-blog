@@ -61,19 +61,3 @@ def update(id)
   end
 end
 ```
-
-## Form requirements
-
-- Form object should have a :default => option
-- Form object should have a :required => true
-  - Form object with required and default might make sense if default acts as null object?
-- Form object should have a :from => 'display_name' to handle JSON responses
-- Form object should not try to coerce empty string or nil unless required
-  - Form object should have overwritable conditions on empty
-- Form object should encourage nilObject use
-- Form needs Standard Boolean, String, Integer, Float, DateTime
-- Boolean can be defined. Should have a standard form thingy
-- Check out virtus Array and Hash they might need to be included in awesomeness
-  - There is no need for and array or hash type if Always defining collections
-  - general nesting structure checkout useuful music batch
-- there should be a true type that is invalid when false for check terms and conditions
