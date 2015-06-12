@@ -1,0 +1,31 @@
+<form class="pure-form pure-form-aligned" action="/posts" method="post">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="post_title">Title</label>
+            <input id="post_title" name="post[title]" type="text" placeholder="Post title" value="<%= @view.title_value %>">
+            <small class="error"><%= @view.title_error %></small>
+        </div>
+
+        <div class="pure-control-group">
+            <label for="post_body">Body</label>
+            <textarea id="post_body" name="post[body]" type="text" placeholder="Post body"><%= @view.body_value %></textarea>
+            <small class="error"><%= @view.body_error %></small>
+        </div>
+
+        <hr>
+
+        <div class="pure-control-group">
+            <label for="post_email">Email Address</label>
+            <input id="post_email" name="post[email]" type="text" placeholder="Email Address" value="<%= @view.email_value %>">
+            <small class="error"><%= @view.email_error %></small>
+        </div>
+
+        <div class="pure-controls">
+            <label for="published" class="pure-checkbox">
+                <input id="published" name="post[published]" type="checkbox" <%= 'checked' if @view.published? %>>Publish this post
+            </label>
+            <br>
+            <button type="submit" class="pure-button pure-button-primary">Submit</button>
+        </div>
+    </fieldset>
+</form>

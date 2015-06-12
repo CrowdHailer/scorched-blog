@@ -1,6 +1,4 @@
-require_relative './views/new_page'
-require_relative './views/index_page'
-require_relative './views/show_page'
+Dir[File.dirname(__FILE__) + '/views/*.rb'].each {|file| require file }
 
 module ScorchedBlog
   class PostsController < BaseController
@@ -62,6 +60,19 @@ module ScorchedBlog
 
     def edit(id)
       interactor = ShowPost.new(self, id)
+
+      interactor.found do |post|
+        @view = EditPage.new post
+        return render :edit
+      end
+
+      interactor.not_found do |id|
+        redirect index_path, 404
+      end
+    end
+
+    def update(id)
+      interactor = UpdatePost.new(self, id)
 
       interactor.found do |post|
         @view = EditPage.new post
