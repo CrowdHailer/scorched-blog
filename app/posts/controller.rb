@@ -60,6 +60,19 @@ module ScorchedBlog
       end
     end
 
+    def edit(id)
+      interactor = ShowPost.new(self, id)
+
+      interactor.found do |post|
+        @view = EditPage.new post
+        return render :edit
+      end
+
+      interactor.not_found do |id|
+        redirect index_path, 404
+      end
+    end
+
     def destroy(id)
       interactor = DestroyPost.new(self, id)
 
