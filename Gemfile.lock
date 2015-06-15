@@ -6,10 +6,10 @@ GIT
 
 GIT
   remote: git@github.com:CrowdHailer/Errol.git
-  revision: 19d8d37d66b1dea03f8097d1c2e592c5112fcf70
+  revision: 80b5850ff9e6a51a68dbd89f274b13d0d481c17d
   specs:
     errol (0.0.1)
-      sequel (~> 4.19.0)
+      sequel (~> 4.19)
 
 PATH
   remote: ./gems/scorched-rest
@@ -39,8 +39,8 @@ GEM
     eventmachine (1.0.7)
     mime-types (2.6.1)
     mini_portile (0.6.2)
-    minitest (5.6.1)
-    minitest-reporters (1.0.16)
+    minitest (5.7.0)
+    minitest-reporters (1.0.17)
       ansi
       builder
       minitest (>= 5.0)
@@ -49,13 +49,13 @@ GEM
       mini_portile (~> 0.6.0)
     parslet (1.7.0)
       blankslate (>= 2.0, <= 4.0)
-    pg (0.18.1)
+    pg (0.18.2)
     rack (1.6.1)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-test (0.6.3)
       rack (>= 1.0)
-    redcarpet (3.2.3)
+    redcarpet (3.3.1)
     ruby-progressbar (1.7.5)
     sass (3.4.14)
     scorched (0.24)
@@ -65,7 +65,7 @@ GEM
       tilt (~> 1.4)
     scorched-accept (0.1)
       parslet (~> 1.7)
-    sequel (4.19.0)
+    sequel (4.23.0)
     shotgun (0.9.1)
       rack (>= 1.0)
     thin (1.6.3)
@@ -93,7 +93,7 @@ DEPENDENCIES
   sass
   scorched
   scorched-rest!
-  sequel (~> 4.19.0)
+  sequel
   shotgun
   thin
   typetanic!
